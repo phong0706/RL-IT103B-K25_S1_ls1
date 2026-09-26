@@ -1,1 +1,10 @@
-Phân tích nguyên nhân kỹ thuậtLỗi nối chuỗi (String Concatenation): Các biến rawFoodPrice ("55000") và rawToppingPrice ("15000") được khai báo dưới dạng kiểu dữ liệu chuỗi (String). Khi sử dụng toán tử cộng (+) giữa hai chuỗi, JavaScript thực hiện thao tác nối chuỗi thay vì cộng số học, dẫn đến giá trị foodTotal thành "5500015000".Hệ quả nghiệp vụ: Biến foodTotal mang giá trị chuỗi lớn, làm cho điều kiện so sánh foodTotal >= 60000 bị sai lệch ngữ nghĩa (so sánh chuỗi theo bảng mã ASCII), từ đó tự động duyệt sai điều kiện miễn phí vận chuyển (isEligibleFreeship) và làm hỏng các phép tính số học thanh toán tiếp theo.Bảng Test Cases đối chứngTrường hợp kiểm thửDữ liệu đầu vàoKết quả sai thực tếKết quả đúng mong đợiTC1: Tính tổng giá trị món ăn và FreeshiprawFoodPrice = "55000"rawToppingPrice = "15000"rawDistanceKm = "3.5"foodTotal = "5500015000" (Nối chuỗi)isEligibleFreeship = true (Hiểu lầm vượt 60.000đ)foodTotal = 70000isEligibleFreeship = trueTC2: Thanh toán tổng tiền cuối cùngfoodTotal từ TC1deliveryFee = 20000voucherDiscount = 15000finalPayment = "550001500020000-15000" (Sai lệch hoàn toàn)finalPayment = 75000
+Phân tích nguyên nhân kỹ thuật:
+Nguyên nhân: Các biến dữ liệu đầu vào rawFoodPrice, rawToppingPrice, và rawDeliveryFee được khởi tạo dưới dạng chuỗi ký tự (String), ví dụ như "55000".
+
+Hành vi của toán tử +: Khi toán tử + thao tác với dữ liệu dạng chuỗi, JavaScript thực hiện cơ chế nối chuỗi (concatenation) thay vì phép cộng số học (addition). Do đó:
+
+foodTotal = rawFoodPrice + rawToppingPrice thành "55000" + "15000" kết quả là chuỗi "5500015000".
+
+Tiếp tục cộng với rawDeliveryFee và trừ đi voucherDiscount, chuỗi tiếp tục bị nối dài thành "550001500020000".
+
+Giải pháp: Cần sử dụng hàm ép kiểu tường minh như Number() hoặc parseInt() để chuyển đổi các chuỗi thô thành số trước khi thực hiện các phép tính tài chính.
